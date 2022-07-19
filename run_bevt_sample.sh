@@ -4,7 +4,7 @@ BS=${2:-8}
 EP=${3:-1}
 USE_FULL_DATA=${4:-false}
 
-export BEVT_EARLY_STOP=${5:-true}
+export BEVT_MAX_STEPS=${5:-1200}
 export PYTHONPATH=$(pwd):${PYTHONPATH}
 export OMP_NUM_THREADS=1
 

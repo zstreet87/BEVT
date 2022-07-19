@@ -216,7 +216,8 @@ class MultiSourceRunner(EpochBasedRunner):
         time.sleep(2)  # Prevent possible deadlock during epoch transition
 
         import os
-        early_stop = os.environ.setdefault('BEVT_EARLY_STOP', 'true') == 'true'
+        max_steps = int(os.environ.setdefault('BEVT_MAX_STEPS', '1200'))
+        early_stop = max_steps != 0
         for i, data_batch in enumerate(self.main_loader):
             self._inner_iter = i
             data_batch_list = [data_batch]
@@ -240,7 +241,7 @@ class MultiSourceRunner(EpochBasedRunner):
             #             data_batch, train_mode=True, source=f'/aux{idx}')
             #         self.call_hook('after_train_iter')
             self._iter += 1
-            if early_stop and i == 1200:
+            if early_stop and i == max_steps:
                 break
 
         self.call_hook('after_train_epoch')
